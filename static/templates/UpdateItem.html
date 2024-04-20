@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block title %}
+Update Item
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6"> <!-- Adjust the column size for 50% width -->
+      <div class="card bg-dark text-white"> <!-- Add bg-dark and text-white classes for dark mode -->
+        <div class="card-header">
+          Update Item
+        </div>
+        <div class="card-body">
+          <form id="update_form" method="POST" class="form-register">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+              <label for="name" class="text-white">Name</label> <!-- Add text-white class for label -->
+              {{ form.name(class="form-control bg-dark text-white", placeholder="Enter Name...", autocomplete="off") }} <!-- Add bg-dark and text-white classes for input -->
+            </div>
+            <div class="form-group">
+              <label for="price" class="text-white">Price</label> <!-- Add text-white class for label -->
+              {{ form.price(class="form-control bg-dark text-white", placeholder="Enter Price...", autocomplete="off") }} <!-- Add bg-dark and text-white classes for input -->
+            </div>
+            <div class="form-group">
+              <label for="quantity" class="text-white">Quantity</label> <!-- Add text-white class for label -->
+              {{ form.quantity(class="form-control bg-dark text-white", placeholder="Enter Quantity...", autocomplete="off") }} <!-- Add bg-dark and text-white classes for input -->
+            </div>
+            <div class="form-group">
+              <label for="description" class="text-white">Description</label> <!-- Add text-white class for label -->
+              {{ form.description(class="form-control bg-dark text-white", placeholder="Enter Description...", autocomplete="off") }} <!-- Add bg-dark and text-white classes for input -->
+            </div>
+            <div class="form-group">
+              <label for="type" class="text-white">Item Type</label> <!-- Add text-white class for label -->
+              {{ form.type(class="form-control bg-dark text-white", placeholder="Item Type...", autocomplete="off") }} <!-- Add bg-dark and text-white classes for input -->
+            </div>
+            {%if type == "electronics" %}
+            <div class="form-group">
+              <label for="manufacturer" class="text-white">Manufacturer</label> <!-- Add text-white class for label -->
+              {{ form.manufacturer(class="form-control bg-dark text-white", autocomplete="off") }} <!-- Add bg-dark and text-white classes for input -->
+            </div>
+            {%elif type == "clothing" %}
+            <div class="form-group">
+              <label for="brand" class="text-white">Brand</label> <!-- Add text-white class for label -->
+              {{ form.brand(class="form-control bg-dark text-white", placeholder="Enter Brand...", autocomplete="off") }} <!-- Add bg-dark and text-white classes for input -->
+            </div>
+            <div class="form-group">
+              <label for="size" class="text-white">Size</label> <!-- Add text-white class for label -->
+              {{ form.size(class="form-control bg-dark text-white", placeholder="Enter Size...", autocomplete="off") }} <!-- Add bg-dark and text-white classes for input -->
+            </div>
+            {%elif type == "food" %}
+            <div class="form-group">
+              <label for="brand" class="text-white">Brand</label> <!-- Add text-white class for label -->
+              {{ form.brand(class="form-control bg-dark text-white", placeholder="Enter Brand...", autocomplete="off") }} <!-- Add bg-dark and text-white classes for input -->
+            </div>
+            <div class="form-group">
+              <label for="isHalalCertified" class="text-white">isHalalCertified</label> <!-- Add text-white class for label -->
+              {{ form.isHalalCertified(class="form-control bg-dark text-white", autocomplete="off") }} <!-- Add bg-dark and text-white classes for input -->
+            </div>
+            {%endif%}
+            <div class="modal-footer">
+                <a type="button" class="btn btn-secondary" href="{{url_for('index')}}">Revert & Go Back</a>
+                <button type="submit" class="btn btn-primary" onclick="submitForm('update_form')">Submit</button>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

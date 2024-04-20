@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}
+ShopEase
+{% endblock %}
+
+{% block content %}
+<span>
+  <form method="GET" action="/searchPurchases">
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" name="query" placeholder="Search..." value="{{ query }}">
+      <div class="input-group-append">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </div>
+    </div>
+  </form>
+</span>
+
+<table class="table table-hover table-dark" style="width: 100%;">
+  <thead>
+    <tr>
+      <!-- Your Columns HERE -->
+      <th scope="col">Purchase ID</th>
+      <th scope="col">Item Name</th>
+      <th scope="col">Purchase Date</th>
+      <th scope="col">Price</th>
+      <th scope="col">Options</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Your rows inside the table HERE: -->
+    {% for purchase in purchases %}
+    <tr>
+      <td>{{ purchase.id }}</td>
+      <td>{{ purchase.item_name }}</td>
+      <td>{{ purchase.datePurchased.strftime('%B %d, %Y') }}</td>  {# Format date to word form #}
+      <td>-₱{{ purchase.item_price }}</td>
+      <td>
+        <a class="btn btn-outline btn-danger" href="/deletePurchase/{{ associations[loop.index0].id }}">Delete</a>
+      </td>
+    {% endfor %}
+    </tr>
+  </tbody>
+</table>
+
+
+{% endblock %}

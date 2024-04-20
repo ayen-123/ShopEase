@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}
+Add Electronics
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6"> <!-- Adjust the column size for 50% width -->
+        <div class="card bg-dark text-white"> <!-- Add bg-dark and text-white classes for dark mode -->
+          <div class="card-header">
+            Register Electronics
+          </div>
+          <div class="card-body">
+            <form id="elec_form" method="POST" class="form-register">
+              {{ form.hidden_tag() }}
+              <div class="form-group">
+                {{form.name.label()}} {{ form.name(class="form-control",placeholder="Enter Name...",autocomplete="off")}}
+                <br>
+                {{form.price.label()}} {{ form.price(class="form-control",placeholder="Enter Price...",autocomplete="off")}}
+                <br>
+                {{form.manufacturer.label()}} {{ form.manufacturer(class="form-control",placeholder="Enter Manufacturer...",autocomplete="off") }}
+                <br>
+                {{form.quantity.label()}} {{ form.quantity(class="form-control", placeholder="Enter Quantity...",autocomplete="off") }}
+                <br>
+                {{form.description.label()}} {{ form.description(class="form-control", placeholder="Enter Description...",autocomplete="off") }}
+              </div>
+              <div class="modal-footer">
+                  <a type="button" class="btn btn-secondary" href="{{url_for('index')}}">Cancel</a>
+                  <button type="submit" class="btn btn-primary" onclick="submitForm('elec_form')">Submit</button>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

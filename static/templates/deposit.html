@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}
+Deposit
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6"> <!-- Adjust the column size for 50% width -->
+        <div class="card bg-dark text-white"> <!-- Add bg-dark and text-white classes for dark mode -->
+          <div class="card-header">
+            Deposit Form
+          </div>
+          <div class="card-body">
+            <form id="deposit_form" method="POST" class="form-register">
+              {{ form.hidden_tag() }}
+              <div class="form-group">
+                <label for="amount" class="text-white">Amount</label> <!-- Add text-white class for label -->
+                {{ form.amount(class="form-control bg-dark text-white", autocomplete="off") }} <!-- Add bg-dark and text-white classes for input -->
+              </div>
+              <div class="modal-footer">
+                  <a type="button" class="btn btn-secondary" href="{{url_for('index')}}">Cancel</a>
+                  <button type="submit" class="btn btn-primary" onclick="submitForm('deposit_form')">Submit</button>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

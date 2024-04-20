@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% block title %}
+ShopEase
+{% endblock %}
+
+{% block content %}
+
+<span>
+  <form method="GET" action="{{ url_for('search') }}">
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" name="query" placeholder="Search..." value="{{ query }}">
+      <select class="form-control" name="category" width="50px">
+        <option value="All" {% if category == 'All' %} selected {% endif %}>All</option>
+        <option value="Electronics" {% if category == 'Electronics' %} selected {% endif %}>Electronics</option>
+        <option value="Clothing" {% if category == 'Clothing' %} selected {% endif %}>Clothing</option>
+        <option value="Food" {% if category == 'Food' %} selected {% endif %} >Food</option>
+      </select>
+      <div class="input-group-append">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </div>
+    </div>
+  </form>
+</span>
+
+<table class="table table-hover table-dark" style="width: 100%;">
+  <thead>
+    <tr>
+      <!-- Your Columns HERE -->
+      <th scope="col" style="width: 5%;">ID</th>
+      <th scope="col" style="width: 20%;">Name</th>
+      <th scope="col" style="width: 40%;">Description</th>
+      <th scope="col" style="width: 10%;">Price</th>
+      <th scope="col" style="width: 25%;">Options</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Your rows inside the table HERE: -->
+    {% for item in items %}
+    <tr>
+      <td>{{ item.id }}</td>
+      <td>{{ item.name }}</td>
+      <td style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;">{{item.description}}</td>
+      <td>₱ {{ item.price }}</td>
+      <td>
+        <button class="btn btn-outline btn-info" data-toggle="modal" data-target="#ItemInfo_{{item.id}}">More Info</button>
+        <a class="btn btn-outline btn-warning" href="{{url_for('UpdateItem',item_id=item.id)}}">Edit</a>
+        <a class="btn btn-outline btn-success" href="{{url_for('RegisterPurchase',item_id=item.id)}}">Purchase</a>
+        <a class="btn btn-outline btn-danger" href="/delete/{{ item.id }}">Delete</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<!-- Add Item -->
+<div class="btn-group">
+  <button type="button" class="btn btn-light dropdown-toggle" id="fixed-button" data-toggle="dropdown" aria-haspopup="true"
+  aria-expanded="false" style="margin-bottom: 20px;">
+    Add Item
+  </button>
+ 
+  <div class="dropdown-menu">
+    <a class=" dropdown-item" href="{{url_for('RegisterElectronics')}}">Add Electronics</a>
+    <a class=" dropdown-item" href="{{url_for('RegisterClothing')}}">Add Clothing</a>
+    <a class=" dropdown-item" href="{{url_for('RegisterFood')}}">Add Food</a>
+  </div>
+</div>
+
+<!-- Info Modal -->
+{% for item in items %}
+<div class="modal fade" id="ItemInfo_{{item.id}}" data-backdrop="static" data-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Item Info</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>{{item.id}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Name:</td>
+              <td>{{item.name}}</td>
+            </tr>
+            <tr>
+              <td>Price:</td>
+              <td>{{item.price}}</td>
+            </tr>
+            <tr>
+              <td>Description:</td>
+              <td>{{item.description}}</td>
+            </tr>
+            <tr>
+              <td>Quantity:</td>
+              <td>{{item.quantity}}</td>
+            </tr>
+            
+            {%if item.type == "clothing" %}
+            <tr>
+              <td>Brand:</td>
+              <td>{{item.brand}}</td>
+            </tr>
+            <tr>
+              <td>Size:</td>
+              <td>{{item.size}}</td>
+            </tr>
+            {%elif item.type == "food" %}
+            <tr>
+              <td>Brand:</td>
+              <td>{{item.brand}}</td>
+            </tr>
+            <tr>
+              <td>Halal Certified:</td>
+              <td>{{item.isHalalCertified}}</td>
+            </tr>
+            {%elif item.type == "electronics" %}
+            <tr>
+              <td>Manufacturer:</td>
+              <td>{{item.manufacturer}}</td>
+            </tr>
+            {%endif%}
+          </tbody>
+        </table>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick=refreshPage()>Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+{% endblock %}
+
